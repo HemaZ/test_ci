@@ -1,0 +1,50 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: release new block
+      run: |
+        curl 'https://app.yonohub.com/api/yonoarc/blockbuilder/projects/5efb40ceaa4e75f2a772eb6a/release' \
+          -H 'authority: app.yonohub.com' \
+          -H 'accept: application/json, text/plain, */*' \
+          -H 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTI5MjA2MTYsIm5iZiI6MTU5MjkyMDYxNiwianRpIjoiYTMyNWU5NWItMmM5Yy00N2JmLTg0NGEtZGNmNWY4NGI5ZTk0IiwiZXhwIjoxNTk1NTEyNjE2LCJpZGVudGl0eSI6IjViYTBlMjdmYTYyNjg2MDAxYWY3Nzk2ZSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.tmQujydH_lk28e05jXpdeKkBUtnLDNmuV-OrH_w1axM' \
+          -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36' \
+          -H 'content-type: application/json' \
+          -H 'origin: https://app.yonohub.com' \
+          -H 'sec-fetch-site: same-origin' \
+          -H 'sec-fetch-mode: cors' \
+          -H 'sec-fetch-dest: empty' \
+          -H 'referer: https://app.yonohub.com/blockbuilder/' \
+          -H 'accept-language: en-US,en;q=0.9,de;q=0.8,ar;q=0.7' \
+          -H 'cookie: experimentation_subject_id=IjQ2NmIyNTgwLWQ1MDAtNGViYi1hNWY0LTEzYzMxYjIwNGI4OSI%3D--c8adc799f1e4878f9a39cd1c1052e6c5bb3a22c7; tk_or=%22https%3A%2F%2Fapp.yonohub.com%2Fblockbuilder%2F%22; _ga=GA1.2.839258031.1575754454; tk_ai=3KzxuK%2FLmTMVDpr8PfN%2FizCO; tk_r3d=%22https%3A%2F%2Fwww.google.com%2F%22; tk_lr=%22https%3A%2F%2Fwww.google.com%2F%22' \
+          --data-binary '{"version":"0.0.1-x86_64","description":""}' \
+          --compressed
+    - name: Build
+      run: |
+        curl 'https://app.yonohub.com/api/yonoarc/blockbuilder/projects/5efb40ceaa4e75f2a772eb6a/build' \
+          -H 'authority: app.yonohub.com' \
+          -H 'accept: application/json, text/plain, */*' \
+          -H 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTI5MjA2MTYsIm5iZiI6MTU5MjkyMDYxNiwianRpIjoiYTMyNWU5NWItMmM5Yy00N2JmLTg0NGEtZGNmNWY4NGI5ZTk0IiwiZXhwIjoxNTk1NTEyNjE2LCJpZGVudGl0eSI6IjViYTBlMjdmYTYyNjg2MDAxYWY3Nzk2ZSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.tmQujydH_lk28e05jXpdeKkBUtnLDNmuV-OrH_w1axM' \
+          -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36' \
+          -H 'content-type: application/json' \
+          -H 'origin: https://app.yonohub.com' \
+          -H 'sec-fetch-site: same-origin' \
+          -H 'sec-fetch-mode: cors' \
+          -H 'sec-fetch-dest: empty' \
+          -H 'referer: https://app.yonohub.com/blockbuilder/' \
+          -H 'accept-language: en-US,en;q=0.9,de;q=0.8,ar;q=0.7' \
+          -H 'cookie: experimentation_subject_id=IjQ2NmIyNTgwLWQ1MDAtNGViYi1hNWY0LTEzYzMxYjIwNGI4OSI%3D--c8adc799f1e4878f9a39cd1c1052e6c5bb3a22c7; tk_or=%22https%3A%2F%2Fapp.yonohub.com%2Fblockbuilder%2F%22; _ga=GA1.2.839258031.1575754454; tk_ai=3KzxuK%2FLmTMVDpr8PfN%2FizCO; tk_r3d=%22https%3A%2F%2Fwww.google.com%2F%22; tk_lr=%22https%3A%2F%2Fwww.google.com%2F%22' \
+          --data-binary '{"project":{"all_versions":[{"description":"","is_deleted":false,"release_at":"","version_no":"0.0.0"},{"description":"","is_deleted":false,"release_at":"2020/6/30, 14:04","version_no":"0.0.1-x86_64"}],"creator_user_id":"5ba0e27fa62686001af7796e","creator_username":"Ibrahim Essam","dep_reg_launch_settings":{},"environment":{"id":"5edf9068dd2b4846aa7c28ca","original_env_id":"5ede75e0dd2b4846aa7c28ae"},"file_path_type":"gitrepo","gitRepo":{"url":"https://github.com/HemaZ/test_ci.git"},"id":"5efb40ceaa4e75f2a772eb6a","is_deleted":false,"is_shared":false,"latest_release_date":"2020/6/30, 14:04","log_path":"/MyDrive/ROS2_CI-CD.log","messages_repos":[{"branch":"0.2.0","url":"https://gitlab.yonohub.com/YonoTeam/yonoarc-msgs-ros2.git"},{"branch":"0.8.1","url":"https://gitlab.yonohub.com/YonoTeam/ros2-common-interfaces.git"}],"name":"ROS2 CI-CD","status":"release ready","type":"ros2","version":"0.0.1-x86_64","is_sharable":true,"resources":{"cpu":1,"gpu":0,"memory":1},"instance":"C8"},"express":true,"log_path":"/MyDrive/ROS2_CI-CD.log"}' \
+          --compressed
+  
